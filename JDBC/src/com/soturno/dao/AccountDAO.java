@@ -14,11 +14,17 @@ public class AccountDAO {
 
 	public static void main(String[] args) {
 		
-		try {
-			
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/db", user, password);
+		/*
+		 * É uma boa pratica colocar as inferfaces de conexão ao banco de dados
+		 * dentro do bloco Try para que o java implemente uma interface chamada "autocloseable"
+		 * assim evitando desperdicio de memoria ou pendurando as operações da aplicação. 
+		 * de outra forma precisariamos chamar conn.close() em alguns casos. dessa maneira 
+		 * caso ainda seja necessario chamar o metodo close, podemos criar um bloco finnaly para lidar com isso.
+		 */
+		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/db", user, password);
 			Statement statement = conn.createStatement();
-			
+			ResultSet rs = statement.executeQuery("select * from account;");){
+					
 			/** insert */
 			//int result = statement.executeUpdate("insert into account values(1, 'thippireddy', 'soturno', 10000)");
 			/** update */
@@ -29,7 +35,6 @@ public class AccountDAO {
 			//System.out.println(result + " linhas afetadas");
 			
 			/** ler dados do banco */
-			ResultSet rs = statement.executeQuery("select * from account;");
 					
 			while(rs.next()) {
 				System.out.println("Last Name: " + rs.getString(2));
