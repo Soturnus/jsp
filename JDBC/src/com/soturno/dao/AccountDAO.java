@@ -23,7 +23,7 @@ public class AccountDAO {
 		 */
 		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/db", user, password);
 			Statement statement = conn.createStatement();
-			ResultSet rs = statement.executeQuery("select * from account;");){
+			ResultSet rs = statement.executeQuery("select * from account;")){
 					
 			/** insert */
 			//int result = statement.executeUpdate("insert into account values(1, 'thippireddy', 'soturno', 10000)");
